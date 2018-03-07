@@ -31,7 +31,7 @@ private:
 	hash<K> h;
 
 	
-	//void reSize();
+	void reSize();
 	int getHash(K _key) {
 		return h(_key)&(capicity - 1);
 	}
@@ -44,7 +44,6 @@ private:
 
 public:
 	hashmap(int capicity=16, float _factor=0.75);
-	void reSize();
 	bool put(K _key, V _val);
 	bool remove(K _key);
 	bool contain(K _key);
