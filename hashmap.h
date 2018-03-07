@@ -44,11 +44,14 @@ private:
 
 public:
 	hashmap(int capicity=16, float _factor=0.75);
+	~hashmap();
 	bool put(K _key, V _val);
 	bool remove(K _key);
 	bool contain(K _key);
 	V get(K _key);
 	int getSize() { return size; }
+
+	
 
 	class iterator {
 	private:
@@ -75,22 +78,31 @@ public:
 			}
 		}
 	public:
-		iterator(const hashmap<K, V> *m, Node *pp):m(m) { 
+		iterator(const hashmap<K, V> *m, Node *pp):m(m) {
 			p = pp;
+		}
+		iterator() {
+			m = nullptr;
+			p = nullptr;
 		}
 		pair<K, V> operator*() const {
 			return pair<K, V>(p->key, p->val);
 		}
 
 		iterator &operator++() {
+			next();
+			return *this;
+		}
+
+		iterator operator++(int ) {
 			Node *n = p;
 			next();
 			return iterator(this->m, n);
 		}
-
-		iterator operator++(int ) {
-			next();
-			return *this;
+		iterator operator=(const iterator &tag) {
+			 p = tag.p;
+			 m = tag.m;
+			 return *this;
 		}
 		bool operator==(const iterator &tag) {
 			return p == tag.p;
@@ -113,6 +125,7 @@ public:
 	iterator end() {
 		return iterator(this,nullptr);
 	}
+	
 };
 
 template<typename K, typename V>  hashmap<K, V>::hashmap(int capicity=16, float _factor=0.75) {
@@ -257,4 +270,17 @@ template<typename K, typename V> bool hashmap<K,V>::contain(K _key) {
 		}
 	}
 	return false;
+}
+
+template<typename K, typename V> hashmap<K, V>::~hashmap() {
+	Node *p,*cur;
+	for (int i = 0; i < capicity; i++) {
+		p = data[i];
+		while (p!=nullptr) {
+			cur = p->next;
+			delete p;
+			p = cur;
+		}
+	}
+	delete[] data;
 }

@@ -1,0 +1,4 @@
+﻿  main.cpp
+c:\users\keheng\documents\visual studio 2015\projects\hashmap\hashmap\hashmap.h(179): warning C4715: 'hashmap<int,int>::put': not all control paths return a value
+  HashMap.vcxproj -> C:\Users\keheng\documents\visual studio 2015\Projects\HashMap\Debug\HashMap.exe
+  HashMap.vcxproj -> C:\Users\keheng\documents\visual studio 2015\Projects\HashMap\Debug\HashMap.pdb (Full PDB)

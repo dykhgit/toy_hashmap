@@ -2,10 +2,11 @@
 #include <vector>
 #include <algorithm>
 #include"hashmap.h"
+#include "hashset.h"
 using namespace std;
 
 
-void test() {
+void test_hashmap() {
 	int n = 20000,i;
 	hashmap<int, int> m;
 	for (i = 0; i < n; i++) {
@@ -47,9 +48,49 @@ void test() {
 	}
 	cout << "current size" << m.getSize() << endl;
 }
+
+void test_hashset() {
+	cout << "----------------------------test hashset--------------" << endl;
+	int i, j, n = 10000;
+	hashset<int> s;
+	for (i = 0; i < n; i++) {
+		j = rand()%100;
+		s.add(j);
+	}
+
+	cout << "size=" << s.getSize() << endl;
+	int *d = new int[s.getSize()];
+	hashset<int>::iterator it = s.begin();
+	i = 0;
+	while (it != s.end()) {
+		d[i++] = *it;
+		++it;
+	}
+	sort(d, d + i);
+	for (i = 0; i < s.getSize(); i++) {
+		if (!s.contain(d[i])) {
+			cout << "error,don't contain " << d[i] << endl;
+		}
+	}
+
+	j = min(4, s.getSize());
+	for (i = 0; i < j; i++) {
+		cout << "remove " << d[i] << endl;
+		s.remove(d[i]);
+	}
+
+	for (i = 0; i < j; i++) {
+		if (s.contain(d[i])) {
+			cout << "error,contain " << d[i] << endl;
+		}
+	}
+	cout << "size " << s.getSize() << endl;
+}
+
 int main() {
 	int i;
-	test();
+	test_hashmap();
 	
+	test_hashset();
 	cin >> i;
 }
